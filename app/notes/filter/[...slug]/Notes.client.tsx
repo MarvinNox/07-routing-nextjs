@@ -6,11 +6,12 @@ import NoteList from "@/components/NoteList/NoteList";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
 import { fetchNotes, FetchNotesHTTPResponse } from "@/lib/api";
-import NoteModal from "@/components/NoteModal/NoteModal";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Pagination from "@/components//Pagination/Pagination";
+import Modal from "@/components/Modal/Modal";
+import NoteForm from "@/components/NoteForm/NoteForm";
 
 interface NotesClientProps {
   initialData?: FetchNotesHTTPResponse;
@@ -21,7 +22,6 @@ export default function Notes({ initialData, category }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 400);
-  const [isModal, setIsModal] = useState(false);
 
   useEffect(() => {
     setPage(1);
@@ -35,9 +35,14 @@ export default function Notes({ initialData, category }: NotesClientProps) {
     refetchOnMount: false,
     initialData,
   });
+  const [isModal, setIsModal] = useState(false);
 
-  const handleCreateNote = () => setIsModal(true);
-  const closeModal = () => setIsModal(false);
+  const handleCreateNote = () => {
+    setIsModal(true);
+  };
+  const closeModal = () => {
+    setIsModal(false);
+  };
 
   return (
     <>
@@ -60,7 +65,11 @@ export default function Notes({ initialData, category }: NotesClientProps) {
             </button>
           }
         </header>
-        {isModal && <NoteModal onClose={closeModal} />}
+        {isModal && (
+          <Modal>
+            <NoteForm onClose={closeModal} />
+          </Modal>
+        )}
         {(isLoading || isFetching) && <Loader />}
         {(isError || data?.notes.length === 0) && <ErrorMessage />}
         {data?.notes && <NoteList notes={data.notes} />}
