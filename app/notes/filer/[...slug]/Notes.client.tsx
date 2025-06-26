@@ -4,7 +4,7 @@ import css from "./page.module.css";
 import NoteList from "@/components/NoteList/NoteList";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
-import { fetchNotes, FetchNotesHTTPResponse } from "@/lib/api";
+import { fetchNotes } from "@/lib/api";
 import NoteModal from "@/components/NoteModal/NoteModal";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Loader from "@/components/Loader/Loader";
@@ -12,34 +12,29 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Pagination from "@/components//Pagination/Pagination";
 
 interface NotesClientProps {
-  initialData?: FetchNotesHTTPResponse;
+  category?: string;
 }
 
-export default function Notes({ initialData }: NotesClientProps) {
+export default function Notes({ category }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 400);
+  const [isModal, setIsModal] = useState(false);
 
   useEffect(() => {
     setPage(1);
-  }, [debouncedQuery]);
-
-  const [isModal, setIsModal] = useState(false);
-
-  const handleCreateNote = () => {
-    setIsModal(true);
-  };
-  const closeModal = () => {
-    setIsModal(false);
-  };
+  }, [debouncedQuery, category]);
 
   const { data, isError, isLoading, isFetching, isSuccess } = useQuery({
-    queryKey: ["notes", debouncedQuery, page],
-    queryFn: () => fetchNotes({ page: page, search: debouncedQuery }),
+    queryKey: ["notes", category, debouncedQuery, page],
+    queryFn: () =>
+      fetchNotes({ page: page, search: debouncedQuery, tag: category }),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
-    initialData,
   });
+
+  const handleCreateNote = () => setIsModal(true);
+  const closeModal = () => setIsModal(false);
 
   return (
     <>

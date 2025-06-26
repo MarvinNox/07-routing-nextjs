@@ -15,6 +15,7 @@ interface FetchNotesParams {
   search?: string;
   page?: number;
   perPage?: number;
+  tag?: string;
 }
 
 export interface CreateNoteParams {
@@ -23,12 +24,13 @@ export interface CreateNoteParams {
   tag: string;
 }
 
-export async function fetchNotes({ search, page = 1 }: FetchNotesParams) {
+export async function fetchNotes({ search, page = 1, tag }: FetchNotesParams) {
   const params: FetchNotesParams = {
     page: page,
     perPage: 12,
   };
   if (search) params.search = search;
+  if (tag) params.tag = tag;
 
   const response = await axios.get<FetchNotesHTTPResponse>("", { params });
   return response.data;

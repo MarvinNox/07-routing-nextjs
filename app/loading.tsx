@@ -1,3 +1,7 @@
 export default function loading() {
-  return <p>Loading, please wait...</p>;
+  return (
+    <div className="center">
+      <p>Loading, please wait...</p>
+    </div>
+  );
 }
