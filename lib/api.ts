@@ -54,7 +54,7 @@ export async function createNote({
   return response.data;
 }
 
-export async function deleteNote(noteId: number) {
-  const response = await axios.delete<Note>(`/${noteId}`);
+export async function deleteNote(id: number) {
+  const response = await axios.delete<Note>(`/${id}`);
   return response.data;
 }

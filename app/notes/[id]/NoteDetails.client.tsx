@@ -19,13 +19,7 @@ export default function NoteDetailsClient() {
   });
 
   if (isLoading) return <p>Loading, please wait...</p>;
-
   if (error || !note) return <p>Something went wrong.</p>;
-
-  const formattedDate =
-    note.updatedAt === note.createdAt
-      ? `Created at: ${new Date(note.createdAt).toLocaleString("uk-UA")}`
-      : `Updated at: ${new Date(note.updatedAt).toLocaleString("uk-UA")}`;
 
   return (
     <div className={css.container}>
@@ -35,7 +29,11 @@ export default function NoteDetailsClient() {
           <button className={css.editBtn}>Edit note</button>
         </div>
         <p className={css.content}>{note.content}</p>
-        <p className={css.date}>{formattedDate}</p>
+        <p className={css.date}>
+          {note.updatedAt === note.createdAt
+            ? `Created at: ${new Date(note.createdAt).toLocaleString("uk-UA")}`
+            : `Updated at: ${new Date(note.updatedAt).toLocaleString("uk-UA")}`}
+        </p>
       </div>
     </div>
   );

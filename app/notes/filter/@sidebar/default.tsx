@@ -5,8 +5,8 @@ import { tagMenu } from "@/app/const/constants";
 export default function SidebarNotes() {
   return (
     <ul className={css.menuList}>
-      {tagMenu.map((tag, i) => (
-        <li key={`${tag}+${tag[i]}`} className={css.menuItem}>
+      {tagMenu.map((tag) => (
+        <li key={tag} className={css.menuItem}>
           <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
             {tag}
           </Link>

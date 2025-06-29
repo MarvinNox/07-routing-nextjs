@@ -15,25 +15,21 @@ import NoteForm from "@/components/NoteForm/NoteForm";
 
 interface NotesClientProps {
   initialData?: FetchNotesHTTPResponse;
-  category?: string;
+  tag?: string;
 }
 
-export default function NotesClient({
-  initialData,
-  category,
-}: NotesClientProps) {
+export default function NotesClient({ initialData, tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 400);
 
   useEffect(() => {
     setPage(1);
-  }, [debouncedQuery, category]);
+  }, [debouncedQuery, tag]);
 
   const { data, isError, isLoading, isFetching, isSuccess } = useQuery({
-    queryKey: ["notes", category, debouncedQuery, page],
-    queryFn: () =>
-      fetchNotes({ page: page, search: debouncedQuery, tag: category }),
+    queryKey: ["notes", tag, debouncedQuery, page],
+    queryFn: () => fetchNotes({ page: page, search: debouncedQuery, tag: tag }),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
     initialData,
