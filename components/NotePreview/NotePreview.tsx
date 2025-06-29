@@ -35,11 +35,11 @@ export default function NotePreview({ id }: Props) {
   return (
     <div className={css.container}>
       <div className={css.item}>
+        <button onClick={handleClose} className={css.backBtn}>
+          go Back
+        </button>
         <div className={css.header}>
           <h2>{note.title}</h2>
-          <button onClick={handleClose} className={css.backBtn}>
-            go Back
-          </button>
         </div>
         <p className={css.content}>{note.content}</p>
         <p className={css.date}>{formattedDate}</p>
@@ -47,3 +47,4 @@ export default function NotePreview({ id }: Props) {
     </div>
   );
 }
+
