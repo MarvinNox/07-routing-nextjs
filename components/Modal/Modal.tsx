@@ -8,12 +8,6 @@ interface ModalProps {
 }
 
 export default function Modal({ onClose, children }: ModalProps) {
-  // const router = useRouter();
-
-  // const onClose = useCallback(() => {
-  //   router.back();
-  // }, [router]);
-
   const handleBackDropClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement>) => {
       if (evt.target === evt.currentTarget) {

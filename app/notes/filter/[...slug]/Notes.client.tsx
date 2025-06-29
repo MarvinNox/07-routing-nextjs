@@ -18,7 +18,10 @@ interface NotesClientProps {
   category?: string;
 }
 
-export default function Notes({ initialData, category }: NotesClientProps) {
+export default function NotesClient({
+  initialData,
+  category,
+}: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 400);
