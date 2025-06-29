@@ -36,7 +36,7 @@ export async function fetchNotes({ search, page = 1, tag }: FetchNotesParams) {
   return response.data;
 }
 
-export async function fetchNoteById(id: string) {
+export async function fetchNoteById(id: number) {
   const res = await axios.get<Note>(`${id}`);
   return res.data;
 }

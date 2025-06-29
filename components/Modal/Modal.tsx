@@ -1,18 +1,18 @@
-import { useRouter } from "next/navigation";
 import css from "./Modal.module.css";
 import { ReactNode, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalProps {
+  onClose: () => void;
   children: ReactNode;
 }
 
-export default function Modal({ children }: ModalProps) {
-  const router = useRouter();
+export default function Modal({ onClose, children }: ModalProps) {
+  // const router = useRouter();
 
-  const onClose = useCallback(() => {
-    router.back();
-  }, [router]);
+  // const onClose = useCallback(() => {
+  //   router.back();
+  // }, [router]);
 
   const handleBackDropClick = useCallback(
     (evt: React.MouseEvent<HTMLDivElement>) => {

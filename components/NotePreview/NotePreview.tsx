@@ -5,7 +5,7 @@ import css from "./NotePreview.module.css";
 import { useCallback } from "react";
 
 type Props = {
-  id: string;
+  id: number;
 };
 
 export default function NotePreview({ id }: Props) {
@@ -17,7 +17,7 @@ export default function NotePreview({ id }: Props) {
   const {
     data: note,
     isLoading,
-    error,
+    isError,
   } = useQuery({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
@@ -25,7 +25,7 @@ export default function NotePreview({ id }: Props) {
   });
 
   if (isLoading) return <p>Loading, please wait...</p>;
-  if (error || !note) return <p>Something went wrong.</p>;
+  if (isError || !note) return <p>Something went wrong.</p>;
 
   const formattedDate =
     note.updatedAt === note.createdAt

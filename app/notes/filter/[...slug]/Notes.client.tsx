@@ -59,20 +59,21 @@ export default function Notes({ initialData, category }: NotesClientProps) {
               onPageChange={(selectedPage: number) => setPage(selectedPage)}
             />
           )}
-          {
-            <button onClick={handleCreateNote} className={css.button}>
-              Create note +
-            </button>
-          }
+          <button onClick={handleCreateNote} className={css.button}>
+            Create note +
+          </button>
         </header>
         {isModal && (
-          <Modal>
+          <Modal onClose={closeModal}>
             <NoteForm onClose={closeModal} />
           </Modal>
         )}
         {(isLoading || isFetching) && <Loader />}
-        {(isError || data?.notes.length === 0) && <ErrorMessage />}
-        {data?.notes && <NoteList notes={data.notes} />}
+        {isError && <ErrorMessage />}
+        {isSuccess && data?.notes?.length === 0 && <p>No notes found.</p>}
+        {data?.notes && data?.notes?.length > 0 && (
+          <NoteList notes={data.notes} />
+        )}
       </div>
     </>
   );
